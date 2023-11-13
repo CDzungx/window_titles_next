@@ -10,11 +10,11 @@ mod connection;
 pub type Result<T> = StdResult<T, Box<dyn Error>>;
 
 pub trait ConnectionTrait: Sized {
-	fn new() -> Result<Self>;
-	fn window_titles(&self) -> Result<Vec<Window>>;
+    fn new() -> Result<Self>;
+    fn window_titles(&self) -> Result<Vec<Window>>;
 }
 
 pub struct Window {
-  pub title: String,
-  pub pid: u32,
+    pub title: String,
+    pub pid: u32,
 }
