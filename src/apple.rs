@@ -40,7 +40,7 @@ impl ConnectionTrait for Connection {
         Ok(Self)
     }
     fn window_titles(&self) -> Result<Vec<Window>> {
-        let arguments = &["-ss", "-e", &format!("{}", SCRIPT)];
+        let arguments = &["-ss", "-e", SCRIPT];
         let command = Command::new("osascript")
             .args(arguments)
             .output()
@@ -73,13 +73,18 @@ impl Error for WindowTitleError {}
 
 fn split(output: &str) -> Vec<Window> {
     let mut windows = Vec::new();
-    
-    // Output is in pattern: `"\{pid,'name'}{pid,'name'}"`
-    for window in output.replace("\"", "").split("{") {
-      let pid = window.split(",").next().unwrap().parse::<u32>().unwrap_or(0);
-      let title = window.split("'").nth(1).unwrap_or("").to_string();
 
-      windows.push(Window { title, pid });
+    // Output is in pattern: `"\{pid,'name'}{pid,'name'}"`
+    for window in output.replace('\"', "").split('{') {
+        let pid = window
+            .split(',')
+            .next()
+            .unwrap()
+            .parse::<u32>()
+            .unwrap_or(0);
+        let title = window.split('\'').nth(1).unwrap_or("").to_string();
+
+        windows.push(Window { title, pid });
     }
 
     windows
