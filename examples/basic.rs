@@ -6,5 +6,5 @@ fn main() {
         .window_titles()
         .unwrap()
         .into_iter()
-        .for_each(|win| println!("{}: {}", win.title, win.pid))
+        .for_each(|win| println!("{}: {}", win.pid, win.title))
 }
