@@ -1,6 +1,6 @@
 # window_titles
 
-`window_titles` is a small crossplatform utility crate with the only job of getting the titles of windows.
+`window_titles` is a small crossplatform utility crate with the only job of getting the titles of windows and the PID of those windows.
 
 It supports:
 
@@ -16,7 +16,7 @@ Usage is simple:
 1. Import both `Connection` and `ConnectionTrait`.
 
 ```rs
-use window_titles::{Connection, ConnectionTrait};
+use window_titles::{Connection, ConnectionTrait, Window};
 ```
 
 2. Initiate the connection (Only Linux can return an error for this method).
@@ -25,10 +25,14 @@ use window_titles::{Connection, ConnectionTrait};
 let connection = Connection::new()?;
 ```
 
-3. Get the window titles.
+3. Get the window titles and PIDs.
 
 ```rs
-let titles: Vec<String> = connection.window_titles()?;
+let titles: Vec<Window> = connection.window_titles()?;
+
+for win in titles {
+    println!("{}: {}", win.pid, win.title);
+}
 ```
 
 [`xcb`]: https://github.com/rtbo/rust-xcb
