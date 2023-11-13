@@ -25,8 +25,7 @@ repeat with proc in procList
             set end of infoList to "{" & winPid & "," & quoted form of winName & "}"
         end repeat
     on error errMsg
-        -- do nothing
-        log errMsg
+      -- Ignore
     end try
 end repeat
 
