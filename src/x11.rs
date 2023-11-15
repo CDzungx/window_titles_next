@@ -71,7 +71,8 @@ impl ConnectionTrait for Connection {
 
         let windows = pairs.filter_map(|pair| {
             let window = pair.0?.value()[0];
-            let pid = pair.1?.value()[0];
+            let pid = pair.1?;
+            let pid = if pid.value_len() <= 0 { 0 } else { pid.value()[0] };
 
             let name = get_property(
                 &self.connection,
