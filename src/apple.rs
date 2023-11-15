@@ -5,29 +5,20 @@ use crate::{ConnectionTrait, Result, Window};
 const SCRIPT: &str = r#"
 set infoList to {}
 
--- List of processes
 tell application "System Events"
-    set procList to processes
+    set procList to every application process whose visible is true and name is not "Finder"
+    repeat with proc in procList
+        try
+            set winList to windows of proc
+            set winPid to unix id of proc
+            repeat with win in winList
+                set winName to name of win
+                set end of infoList to "{" & winPid & "," & quoted form of winName & "}"
+            end repeat
+        on error errMsg
+        end try
+    end repeat
 end tell
-
--- Iterate processes
-repeat with proc in procList
-    try
-        -- Windows
-        set winList to windows of proc
-        set winPid to id of proc
-
-        -- Iterate windows
-        repeat with win in winList
-            set winName to name of win
-
-            -- Add to list
-            set end of infoList to "{" & winPid & "," & quoted form of winName & "}"
-        end repeat
-    on error errMsg
-      -- Ignore
-    end try
-end repeat
 
 -- Output
 copy infoList as string to stdout
