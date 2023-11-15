@@ -1,6 +1,6 @@
 use xcb::{
     xproto::{get_property, intern_atom, Atom, ATOM_WINDOW},
-    Connection as XConnection, ATOM_INTEGER
+    Connection as XConnection, ATOM_INTEGER, ATOM_CARDINAL
 };
 
 use crate::{ConnectionTrait, Result, Window};
@@ -58,9 +58,9 @@ impl ConnectionTrait for Connection {
                         false,
                         window,
                         self.pid,
-                        ATOM_INTEGER,
+                        ATOM_CARDINAL,
                         0,
-                        1024
+                        4
                     )
                 )
             })
