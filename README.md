@@ -35,5 +35,16 @@ for win in titles {
 }
 ```
 
+# Platform Notes
+
+## MacOS
+
+* Will likely be slower than other platforms due to the execution of an AppleScript
+
+## Linux
+
+* Getting the PID depends on the window having `_NET_WM_PID` defined.
+  * Not every window does this, so it's likely that the PID will return `0`
+
 [`xcb`]: https://github.com/rtbo/rust-xcb
 [`winapi`]: https://github.com/retep998/winapi-rs
