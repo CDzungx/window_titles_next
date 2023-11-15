@@ -14,6 +14,7 @@ pub trait ConnectionTrait: Sized {
     fn window_titles(&self) -> Result<Vec<Window>>;
 }
 
+#[derive(Clone)]
 pub struct Window {
     pub title: String,
     pub pid: u32,
